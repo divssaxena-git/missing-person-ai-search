@@ -43,7 +43,7 @@ export default function CCTVFootagePage() {
     location: '',
     footageDate: '',
     footageTime: '',
-    reportId: '',
+    reportId: 'none',
     description: '',
     videoUrl: '',
     contactInfo: '',
@@ -92,7 +92,7 @@ export default function CCTVFootagePage() {
           location: formData.location,
           footageDate: formData.footageDate,
           footageTime: formData.footageTime || null,
-          reportId: formData.reportId ? parseInt(formData.reportId) : null,
+          reportId: formData.reportId && formData.reportId !== 'none' ? parseInt(formData.reportId) : null,
           submittedByUserId: user?.id || null,
           description: formData.description || null,
           videoUrl: formData.videoUrl || null,
@@ -107,7 +107,7 @@ export default function CCTVFootagePage() {
           location: '',
           footageDate: '',
           footageTime: '',
-          reportId: '',
+          reportId: 'none',
           description: '',
           videoUrl: '',
           contactInfo: '',
@@ -240,7 +240,7 @@ export default function CCTVFootagePage() {
                       <SelectValue placeholder="Select a missing person report" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">None - General submission</SelectItem>
+                      <SelectItem value="none">None - General submission</SelectItem>
                       {reports.map((report) => (
                         <SelectItem key={report.id} value={report.id.toString()}>
                           {report.fullName} - {report.lastSeenLocation}
