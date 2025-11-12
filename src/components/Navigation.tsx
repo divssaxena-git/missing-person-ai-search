@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Bell, User, Search, FileText, LayoutDashboard, LogOut } from 'lucide-react';
+import { Bell, User, Search, FileText, LayoutDashboard, LogOut, Video } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,6 +57,12 @@ export default function Navigation() {
                 <Button variant="ghost" className="flex items-center gap-2">
                   <FileText className="h-4 w-4" />
                   Report Missing Person
+                </Button>
+              </Link>
+              <Link href="/cctv-footage">
+                <Button variant="ghost" className="flex items-center gap-2">
+                  <Video className="h-4 w-4" />
+                  CCTV Footage
                 </Button>
               </Link>
             </div>

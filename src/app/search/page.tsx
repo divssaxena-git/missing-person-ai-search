@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navigation from '@/components/Navigation';
 import ReportCard from '@/components/ReportCard';
+import ReportSightingDialog from '@/components/ReportSightingDialog';
+import SightingsList from '@/components/SightingsList';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -39,6 +41,8 @@ export default function SearchPage() {
   const [filteredReports, setFilteredReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
+  const [sightingDialogOpen, setSightingDialogOpen] = useState(false);
+  const [showSightings, setShowSightings] = useState(false);
   const [filters, setFilters] = useState({
     search: '',
     status: '',
@@ -365,11 +369,61 @@ export default function SearchPage() {
                     <p className="text-sm">{selectedReport.contactInfo}</p>
                   </div>
                 )}
+
+                {/* Sightings Section */}
+                <div className="pt-4 border-t">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      Reported Sightings
+                    </h4>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowSightings(!showSightings)}
+                    >
+                      {showSightings ? 'Hide' : 'Show'}
+                    </Button>
+                  </div>
+                  {showSightings && <SightingsList reportId={selectedReport.id} />}
+                </div>
+
+                {/* Add Report Sighting Button */}
+                {selectedReport.status === 'active' && (
+                  <div className="pt-4 border-t">
+                    <Button
+                      onClick={() => {
+                        setSightingDialogOpen(true);
+                      }}
+                      className="w-full"
+                      size="lg"
+                    >
+                      <User className="mr-2 h-5 w-5" />
+                      Report a Sighting
+                    </Button>
+                    <p className="text-xs text-center text-muted-foreground mt-2">
+                      Have you seen this person? Help reunite them with their family.
+                    </p>
+                  </div>
+                )}
               </div>
             </>
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Sighting Dialog */}
+      {selectedReport && (
+        <ReportSightingDialog
+          open={sightingDialogOpen}
+          onOpenChange={setSightingDialogOpen}
+          reportId={selectedReport.id}
+          personName={selectedReport.fullName}
+          onSuccess={() => {
+            setShowSightings(true);
+          }}
+        />
+      )}
     </div>
   );
 }

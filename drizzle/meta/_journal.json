@@ -8,6 +8,13 @@
       "when": 1762953748580,
       "tag": "0000_worthless_red_shift",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1762967346121,
+      "tag": "0001_spooky_black_queen",
+      "breakpoints": true
     }
   ]
 }

@@ -44,3 +44,32 @@ export const notifications = sqliteTable('notifications', {
   read: integer('read', { mode: 'boolean' }).default(false),
   createdAt: text('created_at').notNull(),
 });
+
+// Sightings table
+export const sightings = sqliteTable('sightings', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  reportId: integer('report_id').references(() => missingPersons.id),
+  reportedByUserId: integer('reported_by_user_id').references(() => users.id),
+  sightingLocation: text('sighting_location').notNull(),
+  sightingDate: text('sighting_date').notNull(),
+  description: text('description'),
+  contactInfo: text('contact_info'),
+  imageUrl: text('image_url'),
+  verified: integer('verified', { mode: 'boolean' }).default(false),
+  createdAt: text('created_at').notNull(),
+});
+
+// CCTV Footage table
+export const cctvFootage = sqliteTable('cctv_footage', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  reportId: integer('report_id').references(() => missingPersons.id),
+  submittedByUserId: integer('submitted_by_user_id').references(() => users.id),
+  location: text('location').notNull(),
+  footageDate: text('footage_date').notNull(),
+  footageTime: text('footage_time'),
+  description: text('description'),
+  videoUrl: text('video_url'),
+  contactInfo: text('contact_info'),
+  status: text('status').notNull().default('pending'),
+  createdAt: text('created_at').notNull(),
+});
